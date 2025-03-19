@@ -59,7 +59,7 @@ const register = asyncHandler(async (req, res) => {
 
 const login = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
-  if (!username || !email) {
+  if (!(username || email)) {
     throw new ApiError(400, "Username or Email required.");
   }
   const user = await User.findOne({ $or: [{ username }, { email }] });
@@ -74,7 +74,7 @@ const login = asyncHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
 
-  const loggedInUser = await User.findById(user_id).select("-password -refreshToken");
+  const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
 
   const options = {
     httpOnly: true,
