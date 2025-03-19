@@ -23,7 +23,7 @@ const UserSchema = new Schema({
     trim: true,
     index: true,
   },
-  avtar: {
+  avatar: {
     type: String,
     required: true,
   },
@@ -48,7 +48,7 @@ const UserSchema = new Schema({
 // encrypt password before save in DB
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  this.password = await argon2.hash(password);
+  this.password = await argon2.hash(this.password);
   next();
 })
 
