@@ -62,7 +62,7 @@ UserSchema.methods.generateAccessToken = function () {
     //payload Section
     {
       _id: this._id,
-      email: this.emali,
+      email: this.email,
       username: this.username,
       fullName: this.fullName,
     },

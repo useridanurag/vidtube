@@ -1,11 +1,12 @@
-import { ApiError } from "./ApiError"
+import { ApiError } from "./ApiError.js"
 import User from "../models/user.model.js"
 const generateAccessAndRefreshToken = async (userId) => {
   try {
-    const accessToken = generateAccessToken();
-    const refreshToken = generateRefreshToken();
-
     const user = await User.findById(userId);
+    
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
 
